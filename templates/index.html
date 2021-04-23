@@ -1,0 +1,16 @@
+<html>
+<head>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<center>
+{{msg}}
+<br><br>
+<form action="/switch" method = "get" id="usrform">
+<input type="submit" class="btn" value="Switch!">
+<br><br>
+<textarea id="box" name="domain" form="usrform">{{last_server}}</textarea>
+</form>
+</center>
+</body>
+</html>
