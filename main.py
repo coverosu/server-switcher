@@ -2,13 +2,14 @@ import os
 import re
 import json
 import ctypes
-import webview
+import asyncio
 import subprocess
 from functools import cache
 from urllib.parse import unquote
 from threading import Thread as _Thread
 
 import psutil
+import webview
 from WebLamp import Lamp
 from WebLamp import Domain
 from WebLamp import Connection
@@ -23,6 +24,7 @@ class Thread(_Thread):
             print('Exception raise failure')
 
 PORT = 5000
+VERSION = b'0.1'
 html_header = ['Content-type: text/html']
 domain = Domain(f'127.0.0.1:{PORT}')
 
@@ -91,7 +93,7 @@ async def main(con: Connection):
     if 'msg' in con.params:
         msg = unquote(con.params['msg']).encode()
     else:
-        msg = b''
+        msg = b'Version: %s' % VERSION
     
     html = html.replace(
         b'{{msg}}',
@@ -150,7 +152,6 @@ webview.start()
 
 # once the user closes the window
 # stop the event loop and close the thread
-import asyncio
 loop = asyncio.get_event_loop()
 loop.stop()
 loop.close()
